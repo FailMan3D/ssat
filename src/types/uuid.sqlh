@@ -1,0 +1,69 @@
+#if 0 /* don't emit the modeline, it could break stuff */
+-- vim: ft=sql ff=unix fenc=utf-8 tw=0 ts=4 sts=0 sw=4 noet ai fdm=marker
+#endif
+#ifndef _ssat_Types_UUID
+#define _ssat_Types_UUID
+	#if defined(_ssat_DBMS_PG) /*{{{ PostgreSQL */
+		create extension if not exists "uuid-ossp";
+		#define uuid_to_char(victim) victim::text
+		#define uuid_to_hex(victim) replace((victim::text),'-','')
+		#define char_to_uuid(victim) victim::uuid
+		#define newid() uuid_generate_v4()
+	/*}}}*/
+	#elif defined(_ssat_DBMS_Maria) /*{{{ MariaDB */
+		#define UUID binary(16)
+		/* redefine the delimiter because MySQLish quoting/escaping is a pain in the behind */
+		delimiter !!!
+		create function uuid_to_char(in victim UUID) returns char(36) /*{{{*/
+			language sql
+			contains sql
+			deterministic
+			sql security invoker
+			comment 'Turn a 16-byte binary UUID into a formatted text hex-with-dashes UUID'
+			return lcase(concat_ws('-'
+					-- grab segments here
+				));
+			!!! /*}}}*/
+		create function uuid_to_hex(in victim UUID) returns char(32) /*{{{*/
+			language sql
+			contains sql
+			deterministic
+			sql security invoker
+			comment 'Turn a 16-byte binary UUID into a hex string'
+			return lcase(hex(victim));
+			!!! /*}}}*/
+		create function char_to_uuid(in victim varchar(36)) returns UUID /*{{{*/
+			language sql
+			contains sql
+			deterministic
+			sql security invoker
+			comment 'Turn a human-readable text UUID into a 16-byte binary value'
+			return unhex(replace((victim),'-',''));
+			!!! /*}}}*/
+		create function newid() returns UUID /*{{{*/
+			language sql
+			contains sql
+			not deterministic -- calls uuid() internally
+			sql security invoker
+			comment 'Create a new 16-byte binary UUID'
+			return char_to_uuid(uuid());
+			!!! /*}}}*/
+		delimiter ;
+		/* delimiter is now fixed */
+	/*}}}*/
+	#elif defined(_ssat_DBMS_FBird) /*{{{ Firebird */
+		create domain uuid as char(16) character set octets;
+		-- uuid_to_char already defined
+		#define uuid_to_hex(victim) (victim)
+		-- char_to_uuid already defined
+		#define newid() gen_uuid()
+	/*}}}*/
+	#elif defined(_ssat_DBMS_MSSQL) /*{{{ Microsoft SQL Server */
+		#define UUID uniqueidentifier
+		-- UUID encode/decode TBD
+		-- newid() is stock
+	/*}}}*/
+	#else
+		#error "No target database engine selected!"
+	#endif /* engine selection */
+#endif /* include guard */
