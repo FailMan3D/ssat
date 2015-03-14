@@ -1,0 +1,21 @@
+#if 0 /* don't emit the modeline */
+-- vim: ft=sql ff=unix fenc=utf-8 tw=0 ts=4 sts=0 sw=4 noet ai fdm=marker
+#endif
+#ifndef _ssat_Types_UUID
+#define _ssat_Types_UUID
+	#if defined(_ssat_DBMS_PG) /*{{{ PostgreSQL */
+		#define VARBINARY bytea
+		#define VARBINARY(ignored) bytea
+	/*}}}*/
+	#elif defined(_ssat_DBMS_Maria) /*{{{ MariaDB */
+	/*}}}*/
+	#elif defined(_ssat_DBMS_FBird) /*{{{ Firebird */
+		#define VARBINARY varchar character set octets
+		#define VARBINARY(len) char(len) character set octets
+	/*}}}*/
+	#elif defined(_ssat_DBMS_MSSQL) /*{{{ Microsoft SQL Server */
+	/*}}}*/
+	#else
+		#error "No target database engine selected!"
+	#endif /* engine selection */
+#endif /* include guard */

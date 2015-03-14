@@ -1,0 +1,8 @@
+#if 0 /* don't emit the modeline */
+-- vim: ft=c ff=unix fenc=utf-8 tw=0 ts=4 sts=0 sw=4 noet ai fdm=marker
+#endif
+#ifndef _ssat_SSATIntTypesHeader_
+#define _ssat_SSATIntTypesHeader_
+#include "binary/binary.sqlh"
+#include "binary/varbinary.sqlh"
+#endif /* include guard */
