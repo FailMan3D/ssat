@@ -17,7 +17,7 @@
 	/*}}}*/
 	#elif defined(_ssat_DBMS_SQLite) /*{{{ SQLite 3 */
 		#define BINARY BLOB
-		#deifne BINARY(len) BLOB(len)
+		#define BINARY(len) BLOB(len)
 	/*}}}*/
 	#else
 		#error "No target database engine selected!"
