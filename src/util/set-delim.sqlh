@@ -1,0 +1,10 @@
+#ifndef _ssat_Util_SetDelim
+#define _ssat_Util_SetDelim
+#if defined(_ssat_DBMS_PG)
+	-- TODO write me
+#elif defined(_ssat_DBMS_Maria)
+	#define SETDELIM(new,old) delimiter new
+#elif defined(_ssat_DBMS_FBird)
+	#define SETDELIM(new,old) set term new old
+#endif
+#endif /* include guard */
