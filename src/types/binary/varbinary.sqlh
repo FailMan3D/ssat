@@ -1,5 +1,5 @@
 #if 0 /* don't emit the modeline */
--- vim: ft=sql ff=unix fenc=utf-8 tw=0 ts=4 sts=0 sw=4 noet ai fdm=marker
+-- vim: ff=unix fenc=utf-8 tw=0 ts=4 sts=0 sw=4 noet ai fdm=marker
 #endif
 #ifndef _ssat_Types_VarBinary
 #define _ssat_Types_VarBinary
@@ -14,6 +14,10 @@
 		#define VARBINARY(len) char(len) character set octets
 	/*}}}*/
 	#elif defined(_ssat_DBMS_MSSQL) /*{{{ Microsoft SQL Server */
+	/*}}}*/
+	#elif defined(_ssat_DBMS_SQLite) /*{{{ SQLite 3 */
+		#define BINARY BLOB
+		#deifne BINARY(len) BLOB(len)
 	/*}}}*/
 	#else
 		#error "No target database engine selected!"

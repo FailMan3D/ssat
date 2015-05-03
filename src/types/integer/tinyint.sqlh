@@ -1,5 +1,5 @@
 #if 0 /* don't emit the modeline */
--- vim: ft=sql ff=unix fenc=utf-8 tw=0 ts=4 sts=0 sw=4 noet ai fdm=marker
+-- vim: ff=unix fenc=utf-8 tw=0 ts=4 sts=0 sw=4 noet ai fdm=marker
 #endif
 #ifndef _ssat_Types_TinyInt
 #define _ssat_Types_TinyInt
@@ -17,6 +17,8 @@
 	/*}}}*/
 	#elif defined(_ssat_DBMS_MSSQL) /*{{{ Microsoft SQL Server */
 		-- Reference behavior
+	/*}}}*/
+	#elif defined(_ssat_DBMS_SQLite) /*{{{ SQLite 3 */
 	/*}}}*/
 	#else
 		#error "No target database engine selected!"
