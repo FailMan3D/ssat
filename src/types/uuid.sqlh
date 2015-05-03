@@ -1,5 +1,5 @@
 #if 0 /* don't emit the modeline, it could break stuff */
--- vim: ft=sql ff=unix fenc=utf-8 tw=0 ts=4 sts=0 sw=4 noet ai fdm=marker
+-- vim: ff=unix fenc=utf-8 tw=0 ts=4 sts=0 sw=4 noet ai fdm=marker
 #endif
 #ifndef _ssat_Types_UUID
 #define _ssat_Types_UUID
@@ -13,7 +13,7 @@
 	#elif defined(_ssat_DBMS_Maria) /*{{{ MariaDB */
 		#define UUID binary(16)
 		/* redefine the delimiter because MySQLish quoting/escaping is a pain in the behind */
-		delimiter !!!
+		SETDELIM(!!!,;)
 		create function uuid_to_char(in victim UUID) returns char(36) /*{{{*/
 			language sql
 			contains sql
@@ -48,8 +48,13 @@
 			comment 'Create a new 16-byte binary UUID'
 			return char_to_uuid(uuid());
 			!!! /*}}}*/
-		delimiter ;
+		SETDELIM(;,!!!)
 		/* delimiter is now fixed */
+		/*{{{ UUID_MKDEFAULT must have SETDELIM called around it to set & restore the quotes */
+		#define UUID_MKDEFAULT(victbl,viccol,intdelim,enddelim) create trigger trg_ ## victbl ## _ ## viccol ## uuid_defval \
+			before insert on victbl for each row begin if new.viccol is null then set new.viccol = newid() intdelim \
+			end if intdelim end enddelim
+		/*}}}*/
 	/*}}}*/
 	#elif defined(_ssat_DBMS_FBird) /*{{{ Firebird */
 		create domain uuid as char(16) character set octets;
@@ -57,6 +62,12 @@
 		#define uuid_to_hex(victim) (victim)
 		-- char_to_uuid already defined
 		#define newid() gen_uuid()
+
+		/*{{{ UUID_MKDEFAULT must have SETDELIM called around it to set & restore the quotes */
+		#define UUID_MKDEFAULT(victbl,viccol,intdelim,enddelim) create trigger trg_ ## victbl ## _ ## viccol ## uuid_defval \
+			active before insert on victbl as begin if new.viccol is null then set new.viccol = newid() intdelim \
+			end if intdelim end enddelim
+		/*}}}*/
 	/*}}}*/
 	#elif defined(_ssat_DBMS_MSSQL) /*{{{ Microsoft SQL Server */
 		#define UUID uniqueidentifier
