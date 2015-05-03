@@ -131,7 +131,7 @@
 		/*}}}*/
 		#define uuid_to_hex(victim) lower(hex(victim))
 		/*{{{ char_to_uuid */
-		#define char_to_uuid(victim) ( unhex_byte(substr(replace(victim,'-',''),1,2)) || \
+		#define char_to_uuid(victim) cast( unhex_byte(substr(replace(victim,'-',''),1,2)) || \
 			unhex_byte(substr(replace(victim,'-',''),3,2)) || \
 			unhex_byte(substr(replace(victim,'-',''),5,2)) || \
 			unhex_byte(substr(replace(victim,'-',''),7,2)) || \
@@ -146,7 +146,7 @@
 			unhex_byte(substr(replace(victim,'-',''),25,2)) || \
 			unhex_byte(substr(replace(victim,'-',''),27,2)) || \
 			unhex_byte(substr(replace(victim,'-',''),29,2)) || \
-			unhex_byte(substr(replace(victim,'-',''),31,2)) )
+			unhex_byte(substr(replace(victim,'-',''),31,2)) as blob)
 		/*}}}*/
 		#define NewID() (randomblob(16))
 	/*}}}*/
