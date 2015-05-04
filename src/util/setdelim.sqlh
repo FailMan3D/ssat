@@ -1,19 +1,20 @@
 #ifndef _ssat_Util_SetDelim
-#define _ssat_Util_SetDelim
-#if defined(_ssat_DBMS_PG) /*{{{ PostgreSQL */
-	-- TODO write me
-/*}}}*/
-#elif defined(_ssat_DBMS_Maria) /*{{{ MariaDB and MySQL */
-	#define SETDELIM(new,old) delimiter new
-/*}}}*/
-#elif defined(_ssat_DBMS_FBird) /*{{{ Firebird */
-	#define SETDELIM(new,old) set term new old
-/*}}}*/
-#elif defined(_ssat_DBMS_MSSQL) /*{{{ MS SQL Server */
-	-- TODO write me
-/*}}}*/
-#elif defined(_ssat_DBMS_SQLite) /*{{{ SQLite 3 */
-	-- TODO write me
-/*}}}*/
-#endif
+	#define _ssat_Util_SetDelim
+	#if defined(_ssat_DBMS_PG) /*{{{ PostgreSQL */
+		-- TODO write me
+		#define SETDELIM(new,old)
+	/*}}}*/
+	#elif defined(_ssat_DBMS_Maria) /*{{{ MariaDB and MySQL */
+		#define SETDELIM(new,old) delimiter new
+	/*}}}*/
+	#elif defined(_ssat_DBMS_FBird) /*{{{ Firebird */
+		#define SETDELIM(new,old) set term new old
+	/*}}}*/
+	#elif defined(_ssat_DBMS_MSSQL) /*{{{ MS SQL Server */
+		-- TODO write me
+	/*}}}*/
+	#elif defined(_ssat_DBMS_SQLite) /*{{{ SQLite 3 */
+		-- TODO write me
+	/*}}}*/
+	#endif
 #endif /* include guard */
