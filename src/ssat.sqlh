@@ -5,6 +5,7 @@
 #define _ssat_SSATMainHeader_
 #include "util/set-delim.sqlh"
 #include "types/uuid.sqlh"
+#include "types/boolean.sqlh"
 #include "types/binary.sqlh"
 #include "types/integer.sqlh"
 #endif /* include guard */
