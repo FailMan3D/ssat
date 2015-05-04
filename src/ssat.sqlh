@@ -3,7 +3,7 @@
 #endif
 #ifndef _ssat_SSATMainHeader_
 #define _ssat_SSATMainHeader_
-#include "util/set-delim.sqlh"
+#include "util/setdelim.sqlh"
 #include "types/uuid.sqlh"
 #include "types/boolean.sqlh"
 #include "types/binary.sqlh"
