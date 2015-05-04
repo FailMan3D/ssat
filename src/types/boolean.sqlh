@@ -1,0 +1,27 @@
+#if 0 /* don't emit the modeline */
+-- vim: ff=unix fenc=utf-8 tw=0 ts=4 sts=0 sw=4 noet ai fdm=marker
+#endif
+#ifndef _ssat_Types_UUID
+#define _ssat_Types_UUID
+	#if defined(_ssat_DBMS_PG) /*{{{ PostgreSQL */
+		-- do nothing, PostgreSQL has a dedicated boolean type
+	/*}}}*/
+	#elif defined(_ssat_DBMS_Maria) /*{{{ MariaDB */
+		-- do nothing, MariaDB pre-defines internal aliases to TINYINT and compatible values
+	/*}}}*/
+	#elif defined(_ssat_DBMS_FBird) /*{{{ Firebird */
+		create domain boolean as char(1) character set octets collate unicode_ci check(value is null or value in ('T','F'));
+		#define TRUE 'T'
+		#define FALSE 'F'
+	/*}}}*/
+	#elif defined(_ssat_DBMS_MSSQL) /*{{{ Microsoft SQL Server */
+		-- don't know
+	/*}}}*/
+	#elif defined(_ssat_DBMS_SQLite) /*{{{ SQLite 3 */
+		#define TRUE 1
+		#define FALSE 0
+	/*}}}*/
+	#else
+		#error "No target database engine selected!"
+	#endif /* engine selection */
+#endif /* include guard */
