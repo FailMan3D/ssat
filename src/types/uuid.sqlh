@@ -123,11 +123,11 @@
 		#define UUID blob(16)
 		/*{{{ uuid_to_char */
 		#define uuid_to_char(victim) lower( \
-					substring(hex(victim), 1,8) || '-' || \
-					substring(hex(victim), 9,4) || '-' || \
-					substring(hex(victim),13,4) || '-' || \
-					substring(hex(victim),17,4) || '-' || \
-					substring(hex(victim),21,12) )
+					substr(hex(victim), 1,8) || '-' || \
+					substr(hex(victim), 9,4) || '-' || \
+					substr(hex(victim),13,4) || '-' || \
+					substr(hex(victim),17,4) || '-' || \
+					substr(hex(victim),21,12) )
 		/*}}}*/
 		#define uuid_to_hex(victim) lower(hex(victim))
 		/*{{{ char_to_uuid */
