@@ -56,7 +56,7 @@
 		/* delimiter is now fixed */
 
 		/*{{{ UUID_MKDEFAULT must have SETDELIM called around it to set & restore the quotes */
-		#define UUID_MKDEFAULT(victbl,viccol,intdelim,enddelim) create trigger trg_ ## victbl ## _ ## viccol ## uuid_defval \
+		#define UUID_MKDEFAULT(victbl,viccol,intdelim,enddelim) create trigger trg_ ## victbl ## _ ## viccol ## _uuid_defval \
 			before insert on victbl for each row begin if new.viccol is null then set new.viccol = NewID() intdelim \
 			end if intdelim end enddelim
 		/*}}}*/
@@ -69,7 +69,7 @@
 		#define NewID() gen_uuid()
 
 		/*{{{ UUID_MKDEFAULT must have SETDELIM called around it to set & restore the quotes */
-		#define UUID_MKDEFAULT(victbl,viccol,intdelim,enddelim) create trigger trg_ ## victbl ## _ ## viccol ## uuid_defval \
+		#define UUID_MKDEFAULT(victbl,viccol,intdelim,enddelim) create trigger trg_ ## victbl ## _ ## viccol ## _uuid_defval \
 			active before insert on victbl as begin if new.viccol is null then set new.viccol = NewID() intdelim \
 			end if intdelim end enddelim
 		/*}}}*/
