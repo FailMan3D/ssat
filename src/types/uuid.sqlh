@@ -62,8 +62,8 @@
 		/*}}}*/
 	/*}}}*/
 	#elif defined(_ssat_DBMS_FBird) /*{{{ Firebird */
-		create domain uuid as char(16) character set octets;
-		-- uuid_to_char already defined
+		create domain uuid as char(16) character set octets check(value is null or octet_length(value) = 16);
+		-- uuid_to_char already defined, and CHARACTER SET OCTETS fetches as hexadecimal
 		#define uuid_to_hex(victim) (victim)
 		-- char_to_uuid already defined
 		#define NewID() gen_uuid()
